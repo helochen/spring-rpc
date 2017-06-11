@@ -1,6 +1,8 @@
 package com.chen.rpc.test;
 
+import com.chen.rpc.Dao.IRmiService;
 import com.chen.rpc.Dao.IUserMapper;
+import com.chen.rpc.Dao.Imp.IRmiServiceImpl;
 import com.chen.rpc.Dao.Imp.IUserMapperImpl;
 import com.chen.rpc.entity.User;
 import org.junit.After;
@@ -31,6 +33,21 @@ public class testTransaction {
     @After
     public void destoryApplicationContext(){
         System.out.println("end the process");
+    }
+
+    @Test
+    public void startService(){
+        if(applicationContext != null){
+            IRmiService iRmiService = applicationContext.getBean(IRmiServiceImpl.class);
+            while (iRmiService != null){
+                try {
+                    Thread.currentThread().sleep(1000);
+                    System.err.println("wait the request");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Test
